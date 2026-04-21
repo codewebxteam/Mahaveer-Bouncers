@@ -1,46 +1,158 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { MessageCircle, Mail, Phone, Send, ArrowRight } from 'lucide-react';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    phone: '',
+    message: ''
+  });
+
+  const primaryPhone = "919956197272";
+  const emailID = "veerbouncerclubmahaveersecurit@gmail.com";
+
+  const handleWhatsApp = () => {
+    const msg = encodeURIComponent(`Hello Mahaveer Bouncer HQ, Mission Request from ${formData.name || 'Client'}. Brief: ${formData.message || 'Need security assistance.'}`);
+    window.open(`https://wa.me/${primaryPhone}?text=${msg}`, '_blank');
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
   return (
-    <section className="relative py-24 bg-[#050505] border-t border-white/5">
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <motion.h2 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="text-[#F0F8FF] text-4xl md:text-6xl font-black uppercase tracking-tighter mb-12"
-        >
-          REQUEST <span className="opacity-20 italic font-light">DEPLOYMENT</span>
-        </motion.h2>
-
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-          <input 
-            type="text" 
-            placeholder="NAME / ORGANIZATION" 
-            className="bg-zinc-900/50 border border-white/10 p-4 rounded-lg text-white focus:border-white/40 outline-none transition-all"
-          />
-          <input 
-            type="email" 
-            placeholder="OFFICIAL EMAIL" 
-            className="bg-zinc-900/50 border border-white/10 p-4 rounded-lg text-white focus:border-white/40 outline-none transition-all"
-          />
-          <textarea 
-            placeholder="MISSION DETAILS (LOCATION, TIME, THREAT LEVEL)" 
-            className="md:col-span-2 bg-zinc-900/50 border border-white/10 p-4 rounded-lg h-32 text-white focus:border-white/40 outline-none transition-all"
-          ></textarea>
-          
-          <motion.button 
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            className="md:col-span-2 bg-[#F0F8FF] text-black font-black py-4 rounded-lg uppercase tracking-[0.3em] text-sm"
+    <section className="relative py-20 bg-[#050505] border-t border-white/5 font-sans overflow-hidden">
+      {/* Tactical background glow */}
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#722F37]/5 blur-[120px] rounded-full pointer-events-none"></div>
+      
+      <div className="max-w-6xl mx-auto px-6 relative z-10">
+        
+        <div className="text-center mb-16 space-y-4">
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-[#F0F8FF] text-5xl md:text-7xl font-black uppercase tracking-tighter leading-none font-sans"
           >
-            Send Deployment Request
-          </motion.button>
-        </form>
+            REQUEST <span className="text-[#722F37] italic font-light">DEPLOYMENT</span>
+          </motion.h2>
+          <p className="text-zinc-500 uppercase tracking-[0.4em] text-[10px] font-bold font-sans">
+            Mahaveer Bouncer | Elite Command Center
+          </p>
+        </div>
 
-        <div className="mt-16 flex justify-center gap-12 text-zinc-500 text-xs tracking-widest uppercase">
-          <p>HQ: New Delhi, India</p>
-          <p>Email: deploy@eliteforce.in</p>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          
+          {/* Left: Direct Contact Info */}
+          <div className="lg:col-span-5 space-y-6">
+            
+            {/* WhatsApp Premium Card */}
+            <motion.div 
+              whileHover={{ scale: 1.02 }}
+              onClick={handleWhatsApp}
+              className="p-8 bg-zinc-900/40 border border-[#25D366]/20 rounded-[2.5rem] cursor-pointer group hover:bg-[#25D366]/5 transition-all shadow-xl"
+            >
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-[#25D366] text-black rounded-xl shadow-[0_0_15px_rgba(37,211,102,0.4)]">
+                  <MessageCircle size={24} />
+                </div>
+                <span className="text-[#25D366] font-black uppercase tracking-widest text-xs">Live Support</span>
+              </div>
+              <h3 className="text-xl font-bold text-white uppercase tracking-tight">Direct Dispatch</h3>
+              <p className="text-zinc-500 text-[10px] uppercase font-bold tracking-widest mt-2 leading-relaxed">
+                Connect with our Amethi HQ for instant unit deployment.
+              </p>
+            </motion.div>
+
+            {/* Social Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              <a 
+                href={`mailto:${emailID}`}
+                className="p-6 bg-zinc-900/40 border border-white/5 rounded-2xl flex flex-col items-center gap-3 hover:border-white/20 transition-all text-center group"
+              >
+                <Mail size={20} className="text-zinc-400 group-hover:text-white transition-colors" />
+                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-500">Secure Mail</span>
+              </a>
+              
+              {/* Instagram Card */}
+              <a 
+                href="https://instagram.com/veer_bouncer_club" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-6 bg-zinc-900/40 border border-white/5 rounded-2xl flex flex-col items-center gap-3 hover:border-[#E1306C]/50 transition-all text-center group"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-zinc-400 group-hover:text-[#E1306C] transition-colors">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                </svg>
+                <span className="text-[8px] font-black uppercase tracking-widest text-zinc-500">Instagram</span>
+              </a>
+            </div>
+
+            {/* Calling Card */}
+            <a 
+              href={`tel:+${primaryPhone}`}
+              className="flex items-center justify-between p-5 bg-white text-black rounded-2xl hover:bg-[#722F37] hover:text-white transition-all group shadow-xl"
+            >
+              <div className="flex items-center gap-4">
+                <Phone size={18} />
+                <span className="font-black uppercase tracking-widest text-xs">+91 99561 97272</span>
+              </div>
+              <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+            </a>
+          </div>
+
+          {/* Right: Tactical Form */}
+          <div className="lg:col-span-7 bg-white/[0.01] border border-white/5 p-8 md:p-10 rounded-[3rem] backdrop-blur-xl shadow-2xl relative">
+            <form className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="relative">
+                  <input 
+                    required
+                    name="name"
+                    value={formData.name}
+                    onChange={handleInputChange}
+                    type="text" 
+                    placeholder="YOUR NAME" 
+                    className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white outline-none text-xs focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37]/30 transition-all placeholder:text-zinc-700 font-bold"
+                  />
+                </div>
+                <div className="relative">
+                  <input 
+                    required
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    type="tel" 
+                    placeholder="CONTACT NO" 
+                    className="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-white outline-none text-xs focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37]/30 transition-all placeholder:text-zinc-700 font-bold"
+                  />
+                </div>
+              </div>
+              <div className="relative">
+                <textarea 
+                  required
+                  name="message"
+                  value={formData.message}
+                  onChange={handleInputChange}
+                  placeholder="MISSION DETAILS (LOCATION, TIME, FORCE TYPE)..." 
+                  className="w-full bg-black/40 border border-white/10 p-4 rounded-xl h-36 text-white outline-none text-xs resize-none focus:border-[#722F37] focus:ring-1 focus:ring-[#722F37]/30 transition-all placeholder:text-zinc-700 font-bold"
+                ></textarea>
+              </div>
+              <motion.button 
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={handleWhatsApp}
+                type="button"
+                className="w-full bg-[#F0F8FF] text-black font-black py-5 rounded-xl uppercase tracking-[0.4em] text-[10px] flex items-center justify-center gap-3 hover:bg-[#722F37] hover:text-white transition-all shadow-2xl group"
+              >
+                Launch Mission Request <Send size={14} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              </motion.button>
+            </form>
+          </div>
         </div>
       </div>
     </section>

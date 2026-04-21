@@ -1,104 +1,152 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Menu, X, ArrowRight } from 'lucide-react';
+import { Link, useLocation } from 'react-router-dom';
+import { ShieldCheck, Menu, X, ArrowRight, Sun, Moon } from 'lucide-react';
 
 const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // 🔥 Theme logic: LocalStorage check
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? savedTheme === 'dark' : true;
+  });
+  
+  const location = useLocation();
+  const primaryPhone = "919956197272";
+
+  // --- 🔥 Theme Toggle Logic (Pure Black & White) ---
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (isDarkMode) {
+      root.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      root.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleHireClick = () => {
+    const message = encodeURIComponent("Hello Mahaveer Bouncer, I want to hire your security services.");
+    window.open(`https://wa.me/${primaryPhone}?text=${message}`, '_blank');
+  };
+
   const navLinks = [
-    { name: 'Home', href: '#' },
-    { name: 'Service', href: '#' },
-    { name: 'Bouncer', href: '#' },
-    { name: 'Contact', href: '#' },
-    { name: 'About', href: '#' },
+    { name: 'Home', path: '/' },
+    { name: 'About', path: '/about' },
+    { name: 'Service', path: '/services' },
+    { name: 'Contact', path: '/contact' },
   ];
 
   return (
-    <div className="fixed top-0 left-0 w-full z-50 flex justify-center pt-4 md:pt-6 px-4">
+    <div className="fixed top-0 left-0 w-full z-[100] flex justify-center pt-4 md:pt-6 px-4 font-sans">
       <motion.nav 
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className={`flex items-center justify-between px-6 md:px-10 py-3 transition-all duration-500
+        className={`flex items-center justify-between px-5 md:px-10 py-3 transition-all duration-500
           ${scrolled 
-            ? 'w-full md:w-[75%] bg-white/5 backdrop-blur-2xl border border-white/10 rounded-full shadow-[0_20px_50px_rgba(0,0,0,0.8)]' 
+            ? 'w-full md:w-[85%] bg-white/90 dark:bg-black/40 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-full shadow-xl' 
             : 'w-full bg-transparent border-transparent'
           }`}
       >
         
-        {/* Left: Branding - Ice White Focus */}
-        <div className="flex items-center gap-2 group cursor-pointer">
+        {/* Left: Branding (Pure Black & White Swap) */}
+        <Link to="/" className="flex items-center gap-2 group cursor-pointer shrink-0">
           <motion.div 
             whileHover={{ rotate: 180 }}
-            className="p-1.5 bg-[#F0F8FF] rounded-lg shadow-[0_0_20px_rgba(240,248,255,0.3)]"
+            className="p-1.5 bg-black dark:bg-white rounded-lg shadow-lg transition-colors duration-500"
           >
-            <ShieldCheck size={20} className="text-black" strokeWidth={2.5} />
+            <ShieldCheck size={18} className="text-white dark:text-black" strokeWidth={2.5} />
           </motion.div>
-          <span className="text-[#FFFAFA] font-bold tracking-tighter text-xl uppercase">
-            Bouncer<span className="text-[#F0F8FF] opacity-80 italic">Hub</span>
+          <span className="text-black dark:text-white font-bold tracking-tighter text-lg md:text-xl uppercase transition-colors duration-500">
+            Mahaveer<span className="opacity-40 italic hidden xs:inline">Bouncer</span>
           </span>
-        </div>
+        </Link>
 
-        {/* Middle: Links - Ice White Hover */}
-        <div className="hidden md:flex items-center space-x-10">
+        {/* Middle: Links */}
+        <div className="hidden lg:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <a
+            <Link
               key={link.name}
-              href={link.href}
-              className="group relative text-[11px] uppercase tracking-[0.2em] font-bold text-[#F0F8FF]/50 transition-colors hover:text-[#F0F8FF]"
+              to={link.path}
+              className={`group relative text-[10px] uppercase tracking-[0.2em] font-bold transition-colors 
+                ${location.pathname === link.path 
+                  ? 'text-black dark:text-white' 
+                  : 'text-zinc-400 dark:text-white/50 hover:text-black dark:hover:text-white'}`}
             >
               {link.name}
               <motion.span 
-                className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#F0F8FF]"
+                className="absolute -bottom-1 left-0 w-0 h-[1px] bg-black dark:bg-white"
                 whileHover={{ width: '100%' }}
-                transition={{ duration: 0.3 }}
               />
-            </a>
+            </Link>
           ))}
         </div>
 
-        {/* Right: Hire Now Button - Ice White Theme */}
-        <div className="flex items-center">
-          <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "#FFFFFF", boxShadow: "0px 0px 30px rgba(255, 255, 255, 0.2)" }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-[#F0F8FF] text-black text-[12px] font-black px-7 py-2.5 rounded-full flex items-center gap-2 transition-all shadow-lg"
+        {/* Right Section */}
+        <div className="flex items-center gap-2 md:gap-4">
+          
+          {/* Theme Toggle Button */}
+          <motion.button
+            whileTap={{ scale: 0.8 }}
+            onClick={() => setIsDarkMode(!isDarkMode)}
+            className="p-2 text-black dark:text-white/70 hover:opacity-100 transition-all"
           >
-            HIRE NOW
+            {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
+          </motion.button>
+
+          <motion.button 
+            onClick={handleHireClick}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-black dark:bg-white text-white dark:text-black text-[10px] md:text-[12px] font-black px-4 md:px-7 py-2 md:py-2.5 rounded-full flex items-center gap-2 transition-all shadow-lg whitespace-nowrap"
+          >
+            <span className="hidden xs:inline">HIRE NOW</span>
+            <span className="xs:hidden font-bold">HIRE</span>
             <ArrowRight size={14} />
           </motion.button>
 
-          {/* Mobile Menu Toggle */}
-          <button onClick={() => setIsOpen(!isOpen)} className="ml-4 md:hidden text-[#F0F8FF]">
+          <button onClick={() => setIsOpen(!isOpen)} className="lg:hidden text-black dark:text-white">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </motion.nav>
 
-      {/* Mobile Menu - Deep Black & Ice White */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
           <motion.div 
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="absolute top-20 left-4 right-4 bg-black border border-white/10 rounded-3xl p-8 md:hidden"
+            className="absolute top-24 left-4 right-4 bg-white/95 dark:bg-black/95 backdrop-blur-2xl border border-black/10 dark:border-white/10 rounded-3xl p-8 lg:hidden shadow-2xl overflow-hidden"
           >
             <div className="flex flex-col space-y-6">
               {navLinks.map((link) => (
-                <a key={link.name} href={link.href} className="text-[#F0F8FF] text-lg font-bold tracking-widest">
+                <Link 
+                  key={link.name} 
+                  to={link.path} 
+                  onClick={() => setIsOpen(false)}
+                  className={`text-lg font-bold tracking-widest uppercase transition-colors
+                    ${location.pathname === link.path ? 'text-black dark:text-white' : 'text-zinc-400 dark:text-white/40'}`}
+                >
                   {link.name}
-                </a>
+                </Link>
               ))}
+              <button 
+                onClick={handleHireClick}
+                className="w-full py-4 bg-black dark:bg-white text-white dark:text-black font-black rounded-xl uppercase tracking-widest text-xs mt-4"
+              >
+                Hire on WhatsApp
+              </button>
             </div>
           </motion.div>
         )}

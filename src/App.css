@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  /* Katha Color (Maroon/Burgundy) */
+  --color-katha: #722F37;
+  --color-katha-light: #923D47;
+}
+
+/* Light Mode Defaults (Off-white with Katha touch) */
+:root {
+  background-color: #FDF5F5;
+  color: #1a1a1a;
+}
+
+/* Dark Mode Defaults */
+.dark {
+  background-color: #050505;
+  color: #ffffff;
+}
+
+/* Custom Katha Gradient Class */
+.katha-gradient {
+  background: linear-gradient(135deg, #722F37 0%, #3d161a 100%);
+}
