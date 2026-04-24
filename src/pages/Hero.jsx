@@ -1,104 +1,126 @@
 import React from 'react';
+import guardImg from "../assets/g2.png";
 import { motion } from 'framer-motion';
-import { Shield, ArrowRight, CheckCircle, Clock, Lock, Award } from 'lucide-react';
+import { Shield, ArrowRight, User, Award, Clock, Lock, CheckCircle, PhoneCall } from 'lucide-react';
 
 const Hero = () => {
   return (
-    /* mt-20 (Mobile) aur lg:mt-[88px] (Desktop): 
-        Ye aapke Navbar ki height ke barabar gap create karega 
-        taaki image aur content navbar ke piche na chhupien.
-    */
-    <section className="relative w-full bg-[#F5F5F7] dark:bg-[#050505] overflow-hidden font-sans transition-colors duration-500 mt-20 lg:mt-[88px]">
+    <section className="relative w-full min-h-screen bg-white dark:bg-[#050505] overflow-hidden font-sans">
       
-      {/* --- 👮 LARGE CINEMATIC IMAGE --- */}
-      {/* 'hidden lg:block' add kiya hai taaki phone par image na dikhe */}
-      <div className="absolute inset-0 w-full h-full z-0 hidden lg:block">
-        {/* Gradients for text clarity */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#F5F5F7] via-[#F5F5F7]/80 dark:from-[#050505] dark:via-[#050505]/80 to-transparent z-10 hidden lg:block"></div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#F5F5F7] dark:from-[#050505] via-transparent to-transparent z-10 lg:hidden"></div>
+      {/* --- 👮 BACKGROUND IMAGE LAYER --- */}
+      <div className="absolute inset-0 z-0">
+        <img 
+  src={guardImg}
+  className="w-full h-full object-cover object-[center_right] lg:object-right"
+  alt="Security Guard"
+/>
         
-        <motion.img 
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.5 }}
-          src="src/assets/gaurd.png" 
-          className="w-full h-full object-cover object-right lg:object-center brightness-100 dark:brightness-75"
-        />
+        {/* 🔥 WHITE / DARK GRADIENT */}
+        <div className="absolute inset-0 
+          bg-gradient-to-r 
+          from-white via-white/95 to-transparent 
+          dark:from-black dark:via-black/90 dark:to-transparent 
+          w-full lg:w-[65%] z-10">
+        </div>
+        
+        {/* 🔥 BLUE CURVED OVERLAYS */}
+        <div 
+          className="absolute bottom-0 left-0 w-full h-[35%] bg-blue-600/90 z-10"
+          style={{ clipPath: 'polygon(0 45%, 100% 100%, 0% 100%)', mixBlendMode: 'multiply' }}
+        ></div>
+        <div 
+          className="absolute bottom-0 left-0 w-full h-[40%] bg-blue-700/40 z-0"
+          style={{ clipPath: 'polygon(0 30%, 100% 100%, 0% 100%)' }}
+        ></div>
       </div>
 
-      {/* --- 📝 CONTENT LAYER --- 
-          Height ab 'calc(100vh - navbar_height)' hai taaki screen ke bahar na jaye
-      */}
-      <div className="relative z-20 min-h-[calc(100vh-88px)] w-full flex items-center py-12 lg:py-0">
-        <div className="max-w-7xl mx-auto px-6 w-full">
+      {/* --- 📝 CONTENT LAYER --- */}
+      <div className="relative z-20 max-w-7xl mx-auto px-6 lg:px-12 pt-32 pb-20">
+        
+        <div className="max-w-2xl space-y-8">
           
-          <div className="w-full lg:w-3/5 space-y-8 text-center lg:text-left">
-            
-            {/* Tactical Badge */}
-            <motion.div 
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/50 dark:bg-white/5 backdrop-blur-md border border-black/5 dark:border-white/10 text-blue-700 dark:text-blue-400 text-[10px] font-black uppercase tracking-[0.3em] mx-auto lg:mx-0 shadow-sm"
-            >
-              <Shield size={14} className="text-blue-600" /> Professional Elite Force
-            </motion.div>
+          {/* Badge */}
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="inline-flex items-center gap-2 bg-blue-50 dark:bg-white/5 px-4 py-2 rounded-lg border border-blue-100 dark:border-white/10"
+          >
+            <Shield size={16} className="text-blue-600" />
+            <span className="text-blue-900 dark:text-blue-400 text-xs font-bold tracking-widest uppercase">
+              Trusted. Professional. Discreet.
+            </span>
+          </motion.div>
 
-            {/* Big Bold Heading */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
+          {/* Heading */}
+          <div className="space-y-2">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+              className="text-6xl lg:text-[85px] font-black leading-[0.9] text-gray-900 dark:text-white tracking-tight"
             >
-              <h1 className="text-5xl md:text-7xl lg:text-[100px] font-black leading-[1] lg:leading-[0.85] text-[#0A1D56] dark:text-white tracking-tighter uppercase">
-                Your Safety <br />
-                <span className="text-blue-600">Our Priority</span>
-              </h1>
-              <div className="w-24 h-2 bg-blue-600 mt-6 rounded-full mx-auto lg:mx-0 shadow-lg"></div>
-            </motion.div>
+              Your Safety, <br />
+              <span className="text-blue-600 dark:text-blue-400">Our Priority</span>
+            </motion.h1>
 
-            {/* Paragraph Description */}
-            <motion.p 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="text-zinc-600 dark:text-zinc-400 text-sm md:text-lg lg:text-xl font-medium leading-relaxed max-w-xl mx-auto lg:mx-0"
-            >
-              Experience the pinnacle of protection. We provide verified, 
-              high-caliber bouncers and specialists trained for high-pressure 
-              environments.
-            </motion.p>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <button className="bg-blue-600 text-white px-10 py-5 rounded-2xl font-black text-[11px] uppercase tracking-widest shadow-2xl hover:bg-blue-700 transition-all flex items-center gap-3 group">
-                Deploy Now <ArrowRight size={18} className="group-hover:translate-x-2 transition-transform" />
-              </button>
-              <button className="bg-white/80 dark:bg-white/5 backdrop-blur-md text-[#0A1D56] dark:text-white border border-zinc-200 dark:border-white/10 px-10 py-5 rounded-2xl font-black text-[11px] uppercase tracking-widest hover:bg-white transition-all shadow-sm">
-                Learn More
-              </button>
-            </div>
-
-            {/* Bottom Tactical Icons */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-8 border-t border-black/5 dark:border-white/5 mt-8 max-w-xl mx-auto lg:mx-0">
-              {[
-                { icon: <Award size={22}/>, label: "Elite Unit" },
-                { icon: <Clock size={22}/>, label: "24/7 Shield" },
-                { icon: <Lock size={22}/>, label: "Discreet" }
-              ].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <div className="text-blue-600 dark:text-blue-400">{item.icon}</div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-zinc-500 dark:text-zinc-300">
-                    {item.label}
-                  </span>
-                </div>
-              ))}
-            </div>
+            <div className="w-20 h-1.5 bg-blue-600 dark:bg-blue-500 rounded-full mt-4"></div>
           </div>
+
+          {/* Description */}
+          <div className="space-y-4">
+            <h3 className="text-xl lg:text-2xl font-bold text-gray-800 dark:text-gray-200">
+              Professional Bouncers & VIP Security Services
+            </h3>
+
+            <p className="text-gray-500 dark:text-gray-400 text-lg leading-relaxed max-w-lg font-medium">
+              We provide elite security solutions tailored to protect what matters most — 
+              your people, your reputation, and your peace of mind.
+            </p>
+          </div>
+
+          {/* Buttons */}
+          <div className="flex flex-wrap gap-4 pt-4">
+            
+            <a 
+              href="tel:+18005550199" 
+              className="bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 transition-all shadow-lg shadow-blue-200 dark:shadow-blue-900/40 active:scale-95"
+            >
+              <PhoneCall size={20} /> Book Now <ArrowRight size={20} />
+            </a>
+
+            <button 
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+              className="bg-white dark:bg-white/5 border-2 border-gray-100 dark:border-white/10 hover:border-blue-100 dark:hover:border-blue-500 text-gray-700 dark:text-white px-10 py-4 rounded-xl font-bold flex items-center gap-3 transition-all shadow-sm active:scale-95"
+            >
+              <User size={20} /> Learn More <ArrowRight size={20} />
+            </button>
+          </div>
+
+          {/* Feature Bar */}
+          <motion.div 
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            className="grid grid-cols-2 lg:grid-cols-4 gap-4 bg-white/70 dark:bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/50 dark:border-white/10 shadow-2xl mt-12"
+          >
+            {[
+              { icon: <Award />, label: "Trained Professionals" },
+              { icon: <Clock />, label: "24/7 Protection" },
+              { icon: <Lock />, label: "Discreet & Reliable" },
+              { icon: <CheckCircle />, label: "Licensed & Insured" }
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="text-blue-600 dark:text-blue-400 bg-blue-100/50 dark:bg-blue-500/10 p-2 rounded-lg">
+                  {React.cloneElement(item.icon, { size: 18 })}
+                </div>
+                <span className="text-[11px] font-bold text-gray-700 dark:text-gray-300 uppercase leading-tight">
+                  {item.label}
+                </span>
+              </div>
+            ))}
+          </motion.div>
+
         </div>
       </div>
-
-      {/* Decorative Bottom Shadow */}
-      <div className="absolute bottom-0 left-0 w-full h-[15%] bg-gradient-to-t from-blue-600/10 to-transparent pointer-events-none z-10"></div>
     </section>
   );
 };
